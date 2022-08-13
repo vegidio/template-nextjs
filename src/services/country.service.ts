@@ -11,6 +11,11 @@ export default class CountryService {
         return data.map((country: any) => this.processCountry(country));
     }
 
+    static async getCountryByCode(code: string): Promise<unknown[]> {
+        const { data } = await this.client.get(`/alpha/${code}`);
+        return data.map((country: any) => this.processCountry(country));
+    }
+
     // region - Private methods
     private static processCountry(country: any): unknown[] {
         const languages = Object.keys(country.name.nativeName ?? {});
