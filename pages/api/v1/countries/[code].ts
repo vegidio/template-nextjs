@@ -3,6 +3,31 @@ import { serialize } from 'serializr';
 import { CountryService } from 'src/services';
 import { ApiError } from 'src/models';
 
+/**
+ * @openapi
+ * /api/v1/countries/{code}:
+ *   get:
+ *     tags:
+ *       - country
+ *     summary: Lists all countries that contain a matching country code.
+ *     operationId: getCountriesByCode
+ *     parameters:
+ *       - name: code
+ *         in: path
+ *         description: A country code
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Country'
+ */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const method = req.method;
 
