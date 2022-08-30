@@ -8,7 +8,7 @@ import { ApiError } from 'src/models';
  * /api/v1/countries:
  *   get:
  *     tags:
- *       - country
+ *       - Country
  *     summary: Lists all countries
  *     operationId: getCountries
  *     responses:
@@ -25,14 +25,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const method = req.method;
 
     switch (method) {
-        case 'GET':
+        case 'GET': {
             const response = await CountryService.getAll();
-            res.status(200).json(response);
+            res.json(response);
             break;
+        }
 
         default:
-            const error = new ApiError('METHOD_NOT_ALLOWED', 405);
-            res.status(405).json(serialize(error));
+            const error = ApiError.METHOD_NOT_ALLOWED;
+            res.status(error.status).json(serialize(error));
     }
 };
 

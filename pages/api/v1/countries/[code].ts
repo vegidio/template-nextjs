@@ -8,7 +8,7 @@ import { ApiError } from 'src/models';
  * /api/v1/countries/{code}:
  *   get:
  *     tags:
- *       - country
+ *       - Country
  *     summary: Lists all countries that contain a matching country code.
  *     operationId: getCountriesByCode
  *     parameters:
@@ -32,15 +32,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const method = req.method;
 
     switch (method) {
-        case 'GET':
+        case 'GET': {
             const code = <string>req.query.code;
             const response = await CountryService.getCountryByCode(code);
-            res.status(200).json(response);
+            res.json(response);
             break;
+        }
 
         default:
-            const error = new ApiError('METHOD_NOT_ALLOWED', 405);
-            res.status(405).json(serialize(error));
+            const error = ApiError.METHOD_NOT_ALLOWED;
+            res.status(error.status).json(serialize(error));
     }
 };
 
