@@ -24,9 +24,10 @@ import { ApiError, Auth } from '@src/models';
  *               password:
  *                 type: string
  *                 example: password!
+ *       required: true
  *     responses:
  *       '200':
- *         description: successful operation
+ *         description: Successful operation
  *         content:
  *           application/json:
  *             schema:

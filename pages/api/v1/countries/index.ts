@@ -13,13 +13,15 @@ import { ApiError } from 'src/models';
  *     operationId: getCountries
  *     responses:
  *       '200':
- *         description: successful operation
+ *         description: Successful operation
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Country'
+ *     security:
+ *       - general_auth:
  */
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const method = req.method;
