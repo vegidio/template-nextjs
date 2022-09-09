@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { serialize } from 'serializr';
-import { CountryService } from 'src/services';
-import { ApiError } from 'src/models';
+import { createHandler, Get, Query } from 'next-api-decorators';
+import { CountryService } from '@src/services';
+import { CountryCodePipe } from '@src/pipes';
+import { Country } from '@src/graphql';
 
 /**
  * @openapi
@@ -30,21 +30,11 @@ import { ApiError } from 'src/models';
  *     security:
  *       - general_auth:
  */
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const method = req.method;
-
-    switch (method) {
-        case 'GET': {
-            const code = <string>req.query.code;
-            const response = await CountryService.getCountryByCode(code);
-            res.json(response);
-            break;
-        }
-
-        default:
-            const error = ApiError.METHOD_NOT_ALLOWED;
-            res.status(error.status).json(serialize(error));
+class Handler {
+    @Get()
+    findByCode(@Query('code', CountryCodePipe) code: string): Promise<Country[]> {
+        return CountryService.getCountryByCode(code);
     }
-};
+}
 
-export default handler;
+export default createHandler(Handler);
