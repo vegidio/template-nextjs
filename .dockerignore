@@ -1,0 +1,10 @@
+.dockerignore
+.editorconfig
+.github
+.gitignore
+.next
+.run
+Dockerfile
+README.md
+node_modules
+yarn.lock
