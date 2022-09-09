@@ -24,6 +24,7 @@
         "graphql": "16.5.0",
         "jose": "4.9.0",
         "next": "12.2.3",
+        "next-api-decorators": "2.0.0",
         "next-swagger-doc": "0.3.6",
         "react": "18.2.0",
         "react-dom": "18.2.0",
