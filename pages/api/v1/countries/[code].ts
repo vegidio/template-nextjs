@@ -10,7 +10,7 @@ import { Country } from '@src/graphql';
  *   get:
  *     tags:
  *       - Country
- *     summary: Lists all countries that contain a matching country code.
+ *     summary: Gets a country that matches the country code.
  *     operationId: getCountriesByCode
  *     parameters:
  *       - name: code
@@ -25,16 +25,14 @@ import { Country } from '@src/graphql';
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Country'
+ *               $ref: '#/components/schemas/Country'
  *     security:
  *       - general_auth:
  */
 class Handler {
     @Get()
     @JwtAuthGuard()
-    findByCode(@Query('code', CountryCodePipe) code: string): Promise<Country[]> {
+    findByCode(@Query('code', CountryCodePipe) code: string): Promise<Country> {
         return CountryService.findByCode(code);
     }
 }

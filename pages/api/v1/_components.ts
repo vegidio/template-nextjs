@@ -7,7 +7,7 @@
  *       properties:
  *         jwt:
  *           type: string
- *           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.....RcJQn_lh65ObDgRk8watBZvX7qM_N16eb-LMiNuwJWk
+ *           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...RcJQn_lh65ObDgRk8watBZvX7qM_N16eb-LMiNuwJWk
  *     Country:
  *       type: object
  *       properties:

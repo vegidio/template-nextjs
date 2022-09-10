@@ -5,7 +5,7 @@ export const CountryCodePipe =
     (options?: PipeOptions): ParameterPipe<string> =>
     (value: string, metadata?: PipeMetadata) => {
         if (value.length != 3) {
-            throw new BadRequestException('ERR_COUNTRY_CODE', ['The country code must be 3 characters long']);
+            throw new BadRequestException('ERR_COUNTRY_CODE', ['Country code must be 3 characters long']);
         }
 
         return value.toUpperCase();

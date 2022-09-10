@@ -5,5 +5,5 @@ export const RequiredPipe =
     (options?: PipeOptions): ParameterPipe<string> =>
     (value: any, metadata?: PipeMetadata) => {
         if (value !== undefined) return decodeURIComponent(value);
-        throw new BadRequestException('ERR_PARAM_REQUIRED', [`The query parameter '${metadata?.name}' is required`]);
+        throw new BadRequestException('ERR_PARAM_REQUIRED', [`Query parameter '${metadata?.name}' is required`]);
     };

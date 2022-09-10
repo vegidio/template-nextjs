@@ -1,10 +1,7 @@
-import { alias, primitive, serializable } from 'serializr';
-
 export class Auth {
-    @serializable(alias('jwt', primitive()))
-    jwt: string;
+    accessToken: string;
 
-    constructor(jwt: string) {
-        this.jwt = jwt;
+    constructor(accessToken: string) {
+        this.accessToken = accessToken;
     }
 }

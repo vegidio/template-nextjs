@@ -5,7 +5,7 @@ import { AuthService } from '@src/services';
 export const JwtAuthGuard = createMiddlewareDecorator(
     async (req: NextApiRequest, res: NextApiResponse, next: NextFunction) => {
         const jwt = req.headers.authorization?.replace('Bearer ', '');
-        if (!jwt) throw new HttpException(401, 'AUTH_INVALID', ['Access token missing or invalid']);
+        if (!jwt) throw new HttpException(401, 'AUTH_INVALID', ['Access token missing']);
 
         const isValid = await AuthService.verifyToken(jwt);
         if (isValid) next();

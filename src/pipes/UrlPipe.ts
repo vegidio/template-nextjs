@@ -5,7 +5,7 @@ export const UrlPipe =
     (options?: PipeOptions): ParameterPipe<string> =>
     (value: any, metadata?: PipeMetadata) => {
         if (value === undefined)
-            throw new BadRequestException('ERR_URL_MISSING', [`The query parameter '${metadata?.name}' is required`]);
+            throw new BadRequestException('ERR_URL_MISSING', [`Query parameter '${metadata?.name}' is required`]);
 
         const url = decodeURIComponent(value);
         const regex =
@@ -13,7 +13,7 @@ export const UrlPipe =
 
         if (!regex.test(url))
             throw new BadRequestException('ERR_URL_INVALID', [
-                `The query parameter '${metadata?.name}' should be a valid URL`,
+                `Query parameter '${metadata?.name}' should be a valid URL`,
             ]);
 
         return url;
