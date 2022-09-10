@@ -1,4 +1,5 @@
 import { createHandler, Get } from 'next-api-decorators';
+import { JwtAuthGuard } from '@src/middlewares';
 import { CountryService } from '@src/services';
 import { Country } from '@src/graphql';
 
@@ -24,8 +25,9 @@ import { Country } from '@src/graphql';
  */
 class Handler {
     @Get()
+    @JwtAuthGuard()
     findAll(): Promise<Country[]> {
-        return CountryService.getAll();
+        return CountryService.findAll();
     }
 }
 

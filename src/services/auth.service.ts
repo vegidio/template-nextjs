@@ -1,6 +1,7 @@
 import { importPKCS8, importSPKI, jwtVerify, KeyLike, SignJWT } from 'jose';
+import { HttpException } from 'next-api-decorators';
 import to from 'await-to-js';
-import { ApiError, Auth } from '@src/models';
+import { Auth } from '@src/models';
 import { privateKey, publicKey } from '@src/utils/jwt';
 
 export default class AuthService {
@@ -8,8 +9,8 @@ export default class AuthService {
     private static privateSecret?: KeyLike;
     private static publicSecret?: KeyLike;
 
-    static async signIn(username: string, password: string): Promise<Auth> {
-        if (username === 'vinicius' && password === 'password!') {
+    static async signIn(email: string, password: string): Promise<Auth> {
+        if (email === 'me@vinicius.io' && password === 'password!') {
             this.privateSecret ??= await importPKCS8(privateKey, this.algorithm);
 
             const token = await new SignJWT({ username: 'vinicius' })
@@ -20,7 +21,7 @@ export default class AuthService {
 
             return new Auth(token);
         } else {
-            throw ApiError.AUTH_FAILED;
+            throw new HttpException(401, 'AUTH_FAILED', ['Authentication impossible with this credential']);
         }
     }
 
@@ -30,7 +31,7 @@ export default class AuthService {
 
         switch ((<any>error)?.code) {
             case 'ERR_JWT_EXPIRED':
-                throw ApiError.AUTH_TOKEN_EXPIRED;
+                throw new HttpException(401, 'AUTH_TOKEN_EXPIRED', ['Access token has expired']);
         }
 
         return result?.payload !== undefined;

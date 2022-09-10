@@ -1,4 +1,5 @@
 import { createHandler, Get, Query } from 'next-api-decorators';
+import { JwtAuthGuard } from '@src/middlewares';
 import { CountryService } from '@src/services';
 import { CountryCodePipe } from '@src/pipes';
 import { Country } from '@src/graphql';
@@ -32,8 +33,9 @@ import { Country } from '@src/graphql';
  */
 class Handler {
     @Get()
+    @JwtAuthGuard()
     findByCode(@Query('code', CountryCodePipe) code: string): Promise<Country[]> {
-        return CountryService.getCountryByCode(code);
+        return CountryService.findByCode(code);
     }
 }
 

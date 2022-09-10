@@ -3,7 +3,7 @@ import { CountryService } from 'src/services';
 
 const resolvers: Resolvers = {
     Query: {
-        all: () => <Promise<Country[]>>CountryService.getAll(),
+        all: () => <Promise<Country[]>>CountryService.findAll(),
     },
 
     // Country: {

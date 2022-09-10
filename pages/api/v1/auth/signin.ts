@@ -1,8 +1,16 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { serialize } from 'serializr';
-import to from 'await-to-js';
+import { Body, createHandler, Post, ValidationPipe } from 'next-api-decorators';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { AuthService } from '@src/services';
-import { ApiError, Auth } from '@src/models';
+import { Auth } from '@src/models';
+
+class SignInDto {
+    @IsEmail()
+    email!: string;
+
+    @IsNotEmpty()
+    @IsString()
+    password!: string;
+}
 
 /**
  * @openapi
@@ -18,7 +26,7 @@ import { ApiError, Auth } from '@src/models';
  *           schema:
  *             type: object
  *             properties:
- *               username:
+ *               email:
  *                 type: string
  *                 example: vinicius
  *               password:
@@ -33,27 +41,12 @@ import { ApiError, Auth } from '@src/models';
  *             schema:
  *               $ref: '#/components/schemas/Auth'
  */
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-    const method = req.method;
-
-    switch (method) {
-        case 'POST': {
-            const { username, password } = req.body;
-            const [error, value] = await to<Auth, ApiError>(AuthService.signIn(username, password));
-
-            if (error) {
-                res.status(error.status).json(serialize(error));
-            } else {
-                res.json(serialize(value));
-            }
-
-            break;
-        }
-
-        default:
-            const error = ApiError.METHOD_NOT_ALLOWED;
-            res.status(error.status).json(serialize(error));
+class Handler {
+    @Post()
+    signIn(@Body(ValidationPipe) body: SignInDto): Promise<Auth> {
+        const { email, password } = body;
+        return AuthService.signIn(email, password);
     }
-};
+}
 
-export default handler;
+export default createHandler(Handler);

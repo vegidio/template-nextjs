@@ -1,6 +1,6 @@
 import { alias, primitive, serializable } from 'serializr';
 
-export default class Auth {
+export class Auth {
     @serializable(alias('jwt', primitive()))
     jwt: string;
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Country } from '../graphql';
+import { Country } from '@src/graphql';
 
 export default class CountryService {
     private static client = axios.create({
@@ -7,12 +7,12 @@ export default class CountryService {
         timeout: 5000,
     });
 
-    static async getAll(): Promise<Country[]> {
+    static async findAll(): Promise<Country[]> {
         const { data } = await this.client.get('/all');
         return data.map((country: any) => this.processCountry(country));
     }
 
-    static async getCountryByCode(code: string): Promise<Country[]> {
+    static async findByCode(code: string): Promise<Country[]> {
         const { data } = await this.client.get(`/alpha/${code}`);
         return data.map((country: any) => this.processCountry(country));
     }
